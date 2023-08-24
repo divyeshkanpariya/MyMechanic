@@ -1,0 +1,26 @@
+<form class="example-form" [formGroup]="loginForm">
+  <h1 class="text-center">Login</h1>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+    <mat-error *ngIf="!loginForm.controls.email.valid">
+      Please enter a valid email address
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput formControlName="password" minlength="" placeholder="Ex. Abcd@123">
+    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+    <mat-error *ngIf="!loginForm.controls.password.valid">
+      Please enter a valid Password
+    </mat-error>
+  </mat-form-field>
+  <div class="text-center">
+    <button type="submit" mat-raised-button (click)="onLogin()" color="primary"
+      [disabled]="!loginForm.valid">Login</button>
+    <p class="mt-2 ">Don't have an account? <a class="text-primary text-decoration-none" (click)="OpenRegistration()">Create
+        New</a></p>
+  </div>
+</form>

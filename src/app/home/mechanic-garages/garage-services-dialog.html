@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Available Services</h1>
+<hr>
+<div mat-dialog-content class="pt-0 garage-services-dialog">
+    <table mat-table [dataSource]="data" class="">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="serviceType">
+          <th mat-header-cell *matHeaderCellDef>Service Type</th>
+          <td mat-cell *matCellDef="let element"> {{element.serviceType}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+      
+      
+        <tr mat-header-row class="bg-gray" *matHeaderRowDef="dialogColumns"></tr>
+        <tr mat-row class="bg-light" *matRowDef="let row; columns: dialogColumns;"></tr>
+      </table>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-center">
+    <button color="accent" mat-raised-button mat-dialog-close>Close</button>
+  </div>

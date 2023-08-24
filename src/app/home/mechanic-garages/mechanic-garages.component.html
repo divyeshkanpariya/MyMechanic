@@ -1,0 +1,120 @@
+<div class="m-5">
+    <div class="d-flex justify-content-between mb-2">
+        <h2>My Garages</h2>
+        <div *ngIf="activePage == 'ADDGARAGE' || activePage == 'ADDGARAGEPHOTOS';">
+          <button mat-raised-button color="primary" (click)="closeAddNewGarage()">
+            <mat-icon matListItemIcon>keyboard_backspace</mat-icon>
+            Back
+        </button>
+        </div>
+        <div *ngIf="activePage == 'SHOWGARAGES';">
+          <button mat-raised-button color="primary" (click)="openAddNewGarage()">
+            <mat-icon matListItemIcon>add_circle_outline</mat-icon>
+            Add New Garage
+        </button>
+      </div>
+        
+    </div>
+    <div class="shadow py-2 px-4 bg-white">
+      <div *ngIf="activePage == 'ADDGARAGE';">
+        <app-add-new-garage [data]="editData"></app-add-new-garage>
+      </div>
+      <div *ngIf="activePage == 'ADDGARAGEPHOTOS';">
+        <app-add-garage-photos [data]="addPhotosdata"></app-add-garage-photos>
+      </div>
+      <div *ngIf="activePage == 'SHOWGARAGES'">
+        <h3>All Garages</h3>
+        <div class="garages-table-div w-80">
+            <table mat-table [dataSource]="data">
+          
+              <ng-container matColumnDef="#">
+                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Garage Name</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="address">
+                <th mat-header-cell *matHeaderCellDef>Garage Address</th>
+                <td mat-cell *matCellDef="let element"> 
+                    {{element.address}}<br>
+                    {{element.city}}-{{element.postalCode}}<br>
+                    {{element.state}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="timings">
+                <th mat-header-cell *matHeaderCellDef>Garage Timings</th>
+                <td mat-cell *matCellDef="let element">
+                    Opening Time : {{ element.startingTime}} <br>
+                    Closing Time : {{ element.endingTime}}
+                </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="ratings">
+                <th mat-header-cell *matHeaderCellDef>Ratings</th>
+                <td mat-cell *matCellDef="let element">
+                  <div *ngIf="element.ratings != 0" class="d-flex justify-content-between">
+                    <ng-container *ngFor="let item of ratings;let i=index">
+                      <div *ngIf="element.ratings>i else empty">
+                        <mat-icon>star</mat-icon>
+                      </div>
+                      <ng-template #empty>
+                        <mat-icon>star_border</mat-icon>
+                      </ng-template>
+                    </ng-container>
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="services">
+                <th mat-header-cell *matHeaderCellDef>Service Available</th>
+                <td mat-cell *matCellDef="let element">
+                  <a (click) = "openServices(element.id)" class="text-primary text-decoration-none">Check Services</a>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let element" class="text-center">
+                  <div *ngIf="element.status=='ACTIVE'else disactive">
+                    <button mat-raised-button class="bg-success">Active</button>
+                  </div>
+                  <ng-template #disactive>
+                    <button mat-raised-button class="bg-danger">Disactive</button>
+                  </ng-template>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Action</th>
+                <td mat-cell *matCellDef="let element">
+                  <div class="d-flex justify-content-center">
+                    <button mat-icon-button (click) = "addGaragePhotos(element.id)">
+                      <mat-icon>add_a_photo</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="editGarage(element.id)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+          
+              <tr class="bg-gray" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr class="garage-rows" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                           showFirstLastButtons
+                           aria-label="Select page of periodic elements">
+            </mat-paginator>
+          </div>
+        </div>
+    </div>
+</div>

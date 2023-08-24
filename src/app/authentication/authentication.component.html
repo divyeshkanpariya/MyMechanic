@@ -1,0 +1,13 @@
+<div class="auth-page">
+    <div class="auth-form p-5">
+        <!-- <router-outlet></router-outlet> -->
+        <div *ngIf="authPage=='login'; else register">
+            <app-login (register) = "openRegitsration($event)"></app-login>
+        </div>
+        <ng-template #register>
+            <app-registration (login) = "openLogin($event)"></app-registration>
+        </ng-template>
+        
+    </div>
+</div>
+

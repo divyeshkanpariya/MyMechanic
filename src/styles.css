@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.primary-text{
+    color: #673ab7;
+}
+.primary-bg{
+    background-color: #673ab7;
+}
+.logo-text{
+    font-weight: 500;
+}
+.bg-gray{
+    background-color: rgb(165, 165, 165) !important;
+}

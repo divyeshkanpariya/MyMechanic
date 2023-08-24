@@ -1,0 +1,20 @@
+.garage-rows {
+
+}
+/* .garage-rows:hover {
+    background-color: rgb(219, 219, 219) !important;
+} */
+.garages-table-div{
+    overflow-x: auto;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.garages-table-div th{
+    text-align: center;
+}
+.garage-services-dialog{
+    max-height: 60vh ;
+    overflow-y: auto;
+
+}

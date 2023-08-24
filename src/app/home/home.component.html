@@ -1,0 +1,82 @@
+<mat-drawer-container class="example-container h-100" autosize>
+    <mat-drawer #drawer class="example-sidenav" [mode]="mobileQuery.matches ? 'over' : 'side'"
+        [opened]="!mobileQuery.matches">
+        <div class="logo d-flex align-items-center m-3">
+            <img src="../assets/logo.png" alt="logo" style="width: 50px; height: 50px;">
+            <span class="primary-text logo-text ms-2">WORKSPACE</span>
+            <!-- <img src="../assets/logo-text.png" alt="logo" style="height: 30px;"> -->
+        </div>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/customer/dashboard" routerLinkActive="active-page">
+                <mat-icon matListItemIcon>dashboard</mat-icon>
+                <div matListItemTitle>Dashboard</div>
+            </a>
+            <ng-container *ngIf="role=='CUSTOMER'">
+                <a mat-list-item routerLink="/customer/garages" routerLinkActive="active-page">
+                    <mat-icon matListItemIcon>garage</mat-icon>
+                    <div matListItemTitle>Garages</div>
+                </a>
+                <a mat-list-item routerLink="/customer/appointments" routerLinkActive="active-page">
+                    <mat-icon matListItemIcon>pending_actions</mat-icon>
+                    <div matListItemTitle>My Appointments</div>
+                </a>
+                <a mat-list-item routerLink="/customer/services" routerLinkActive="active-page">
+                    <mat-icon matListItemIcon>miscellaneous_services</mat-icon>
+                    <div matListItemTitle>My Services</div>
+                </a>
+                <a mat-list-item routerLink="/customer/servicehistory" routerLinkActive="active-page">
+                    <mat-icon matListItemIcon>history</mat-icon>
+                    <div matListItemTitle>Service History</div>
+                </a>
+            </ng-container>
+            <ng-container *ngIf="role=='MECHANIC'">
+                <a mat-list-item routerLink="/mechanic-garages" routerLinkActive="active-page">
+                    <mat-icon matListItemIcon>garage</mat-icon>
+                    <div matListItemTitle>My Garages</div>
+                </a>
+                <a mat-list-item routerLink="/mechanic-appointments" routerLinkActive="active-page">
+                    <mat-icon matListItemIcon>pending_actions</mat-icon>
+                    <div matListItemTitle>Appointments</div>
+                </a>
+                <a mat-list-item routerLink="/mechanic-service-queue" routerLinkActive="active-page">
+                    <mat-icon matListItemIcon>queue</mat-icon>
+                    <div matListItemTitle>Service Queue</div>
+                </a>
+            </ng-container>
+
+        </mat-nav-list>
+
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+        <mat-toolbar class="head-toolbar example-toolbar">
+            <button mat-icon-button (click)="drawer.toggle()" class="example-icon"
+                aria-label="Example icon-button with menu icon" color="primary">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>My App</span>
+            <span class="example-spacer"></span>
+            <div class="btn-group">
+                <button type="button" class="btn dropdown-toggle profile-btn" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <img src="../assets/default-profile.jpg" class="profile-img" alt="logo">
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><button class="dropdown-item align-items-center d-flex" type="button">
+                            <mat-icon matListItemIcon>change_circle</mat-icon><span
+                                class="ms-2">Change Password</span></button></li>
+                    <li><button class="dropdown-item align-items-center d-flex" type="button"><mat-icon
+                                matListItemIcon>settings</mat-icon><span class="ms-2">Settings</span></button></li>
+                    <li><button class="dropdown-item align-items-center d-flex" type="button" (click) = "logout()"> 
+                            <mat-icon matListItemIcon>logout</mat-icon><span class="ms-2">Logout</span></button>
+                    </li>
+                </ul>
+            </div>
+        </mat-toolbar>
+        <div class="mt-5 pt-3">
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+
+</mat-drawer-container>

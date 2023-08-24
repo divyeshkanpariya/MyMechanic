@@ -1,0 +1,40 @@
+<div>
+  <h1 class="text-center my-2">Manage Garage Images</h1>
+  <hr>
+<div class="row my-4">
+  <div *ngFor="let item of GaragePhotoData; let i=index" class="col-6 col-sm-4">
+    <mat-card class="example-card h-100 flex-column d-flex justify-content-between">
+
+        <img mat-card-image [src]="'data:image/jpg;base64,'+ item.data" [alt]="item.name" class="h-100">
+      
+      <mat-card-actions>
+        <button mat-raised-button color="warn" class="w-100" (click)="deletePhoto(item.id)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<hr>
+<div class="text-center">
+    <p><strong>Add Photos</strong></p>
+    <input
+      type="file"
+      id="fileInput"
+      name="fileInput"
+      accept="image/*" multiple 
+      (change)="selectFiles($event)"
+      #imageInput
+    />
+    <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!selectedFiles"
+        (click)="uploadFiles()"
+      >
+        Upload
+      </button>
+</div>
+
+  <div class="my-4">
+    <img *ngFor='let preview of previews' [src]="preview" class="preview m-2" height="200px">
+  </div>
+</div>

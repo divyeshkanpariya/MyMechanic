@@ -1,0 +1,77 @@
+
+<form class="example-form" [formGroup]="registrationForm">
+    <h1 class="text-center">Registration</h1>
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput formControlName="email"
+            placeholder="Ex. pat@example.com">
+      <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+        <mat-error *ngIf="!registrationForm.controls.email.valid">
+          Please enter a valid email address
+        </mat-error>
+    </mat-form-field>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>First name</mat-label>
+                <input matInput formControlName="firstname">
+                <mat-error *ngIf="!registrationForm.controls.firstname.valid">
+                    Please enter a valid FirstName
+                  </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastname">
+                <mat-error *ngIf="!registrationForm.controls.lastname.valid">
+                    Please enter a valid LastName
+                  </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput type="tel" formControlName="mobilenumber">
+                <mat-error *ngIf="!registrationForm.controls.lastname.valid">
+                    Please enter a valid mobile number
+                  </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>Select Role</mat-label>
+                <mat-select formControlName="role">
+                    <mat-option value="customer">Customer</mat-option>
+                    <mat-option value="mechanic">Mechanic</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!registrationForm.controls.role.valid">
+                    Please select role
+                  </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Password</mat-label>
+      <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" minlength="" 
+            placeholder="Ex. Abcd@123">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+        <mat-error *ngIf="!registrationForm.controls.password.valid">
+          Please enter a valid Password
+        </mat-error>
+    </mat-form-field>
+
+    <div class="text-center">
+      <button  type="submit" mat-raised-button (click) = "onLogin()" color="primary"
+      [disabled] = "!registrationForm.valid">Register</button>
+      <p class="mt-2">Already have an account? <a class="text-primary text-decoration-none" (click) = "openLogin()">Login</a></p>
+    </div>
+  </form>
