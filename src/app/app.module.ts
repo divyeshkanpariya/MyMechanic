@@ -14,6 +14,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSortModule} from '@angular/material/sort';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +38,8 @@ import { MechanicServiceQueueComponent } from './home/mechanic-service-queue/mec
 import { AddTokenInterceptor } from './Interceptors/add-token.interceptor';
 import { AddNewGarageComponent } from './home/mechanic-garages/add-new-garage/add-new-garage.component';
 import { AddGaragePhotosComponent } from './home/mechanic-garages/add-garage-photos/add-garage-photos.component';
+import { ConfirmDeleteComponent } from './components/confirm-delete/confirm-delete.component';
+import { GarageProfileComponent } from './home/garage-profile/garage-profile.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +57,9 @@ import { AddGaragePhotosComponent } from './home/mechanic-garages/add-garage-pho
     MechanicAppointmentsComponent,
     MechanicServiceQueueComponent,
     AddNewGarageComponent,
-    AddGaragePhotosComponent
+    AddGaragePhotosComponent,
+    ConfirmDeleteComponent,
+    GarageProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +80,10 @@ import { AddGaragePhotosComponent } from './home/mechanic-garages/add-garage-pho
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,
-    HttpClientModule
+    MatSnackBarModule,
+    MatSortModule,
+    MatPaginatorModule,
+    HttpClientModule,
   ],
   providers: [
     AuthenticationService,

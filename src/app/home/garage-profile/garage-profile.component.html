@@ -1,0 +1,62 @@
+<div class="row my-3 mx-2">
+    <div id="carouselExampleControls" class="carousel slide col-lg-6" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <ng-container *ngFor="let photo of data.photos; let i=index">
+                <div *ngIf="i==0" class="carousel-item garage-photo active">
+                    <img [src]="'data:image/jpg;base64,'+ photo.data"  class="d-block">
+                </div>
+                <div *ngIf="i!=0" class="carousel-item garage-photo">
+                    <img [src]="'data:image/jpg;base64,'+ photo.data"  class="d-block">
+                </div>
+            </ng-container>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="col-lg-6 p-3">
+        <div class="d-flex justify-content-between py-3 align-items-center">
+            <p class="garage-title">{{data.name}}</p>
+            <button mat-raised-button color="primary" (click) = "openGaragesPage()"><mat-icon>keyboard_backspace</mat-icon>Back</button>
+        </div>
+        
+        <p>
+            <strong>Address : </strong>
+            {{data.address}},
+            {{data.city}} - {{data.postalCode}},
+            {{data.state}}
+        </p>
+        <strong>Timings : </strong>
+        <ul>
+            <li>Opening Time: {{data.startingTime}}</li>
+            <li>Closing Time: {{data.endingTime}}</li>
+        </ul>
+         
+        <strong>Available Services :</strong>  
+        <ul>
+            <ng-container *ngFor="let item of data.availableServices">
+                <li>{{item.serviceType}} : {{item.price}}</li>
+            </ng-container>
+        </ul>   
+        <p class="text-center"><strong>Ratings</strong></p>
+        <div *ngIf="data.ratings != -1" class="d-flex justify-content-center">
+            <ng-container *ngFor="let item of ratings;let i=index">
+              <div *ngIf="data.ratings>i else empty">
+                <mat-icon>star</mat-icon>
+              </div>
+              <ng-template #empty>
+                <mat-icon>star_border</mat-icon>
+              </ng-template>
+            </ng-container>
+        </div>  
+        <ng-container *ngIf="data.extraDescription != ''">
+            <strong>Extra Description : </strong>
+            <p>{{data.extraDescription}}</p>
+        </ng-container>
+    </div>
+</div>

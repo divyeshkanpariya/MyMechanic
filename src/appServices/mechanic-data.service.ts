@@ -28,12 +28,15 @@ export class MechanicDataService {
     return this.httpClient.post("https://localhost:7241/api/Garage/AddEditGarage",data);
   }
 
+  deleteGarage(garageId:number){
+    return this.httpClient.delete("https://localhost:7241/api/Garage/DeleteGarage?GarageId="+ garageId)
+  }
+
   addGaragePhotos(data:File[],GarageId:number,UserId:number): Promise<any>{
     const formData = new FormData();
     for(var i=0;i<data.length;i++){
       formData.append('Files', data[i], data[i].name);
     }
-
     return this.httpClient.post("https://localhost:7241/api/Garage/AddGaragePhotos?GarageId="+GarageId +"&UserId="+UserId,formData).toPromise();
   }
 
@@ -42,6 +45,6 @@ export class MechanicDataService {
   }
 
   DeleteGaragePhoto(GarageId:number,GaragePhotoId:number){
-    return this.httpClient.delete("https://localhost:7241/api/Garage/DeleteGaragePhotos?GarageId="+GarageId +"&GaragePhotoId="+GaragePhotoId);
+    return this.httpClient.delete("https://localhost:7241/api/Garage/DeleteGaragePhoto?GarageId="+GarageId +"&GaragePhotoId="+GaragePhotoId);
   }
 }

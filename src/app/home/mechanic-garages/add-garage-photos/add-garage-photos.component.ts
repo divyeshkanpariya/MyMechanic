@@ -1,6 +1,7 @@
 import { Component, Input ,ViewChild,ElementRef } from '@angular/core';
 import { MechanicDataService } from 'src/appServices/mechanic-data.service';
 import { map } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-garage-photos',
@@ -9,25 +10,28 @@ import { map } from 'rxjs';
 })
 export class AddGaragePhotosComponent {
 
-  constructor(private _mechanicDataService:MechanicDataService){}
-  @ViewChild('imageInput') imageInput:ElementRef | undefined;
+  constructor(private _mechanicDataService:MechanicDataService,
+    private snackbar: MatSnackBar){}
+  @ViewChild('imageInput') imageInput:any;
   @Input() data: any;
+  
   previews: string[] = [];
   selectedFiles: File[] = [];
   selectedFileNames: string[] = [];
   GaragePhotoData:any = [];
 
   ngOnInit(){
-    console.log(this.data)
-    this._mechanicDataService.GetGaragePhotos(this.data.id,this.data.userID).subscribe(
-      (res:any) => {
-        console.log("Photos: ",res);
-        this.GaragePhotoData = res;
-        
-      }
-    )
+    this.updateGaragePhotos();
   }
 
+  updateGaragePhotos(){
+    this._mechanicDataService.GetGaragePhotos(this.data.id,this.data.userID).subscribe(
+      (res:any) => {
+        this.GaragePhotoData = res;
+        console.log(res)
+      }
+    );
+  }
   selectFiles(event: any): void {
     this.selectedFileNames = [];
     this.selectedFiles = event.target.files;
@@ -39,7 +43,6 @@ export class AddGaragePhotosComponent {
         const reader = new FileReader();
 
         reader.onload = (e: any) => {
-          // console.log(e.target.result);
           this.previews.push(e.target.result);
         };
 
@@ -50,19 +53,31 @@ export class AddGaragePhotosComponent {
     }
   }
   uploadFiles(){
-      
     this._mechanicDataService.addGaragePhotos(this.selectedFiles,this.data.id,this.data.userID).then(
       (res:any) => {
-        console.log(res);
         this.selectedFileNames = [];
         this.selectedFiles = [];
         this.previews = [];
+        this.updateGaragePhotos();
+        this.imageInput.nativeElement.value = "";
+        this.snackbar.open('Uploaded Successfully!!', 'close', {
+          horizontalPosition: "center",
+          verticalPosition: "top",
+          duration: 3000,
+        });
       },
     )
   }
   deletePhoto(Id:number){
     this._mechanicDataService.DeleteGaragePhoto(this.data.id,Id).subscribe(
-      (res:any) => {console.log(res)}
+      (res:any) => {
+        this.updateGaragePhotos();
+        this.snackbar.open('Deleted Successfully!!', 'close', {
+          horizontalPosition: "center",
+          verticalPosition: "top",
+          duration: 3000,
+        });
+      }
     )
   }
 }

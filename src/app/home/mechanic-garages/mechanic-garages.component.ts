@@ -6,6 +6,9 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { ConfirmDeleteComponent } from 'src/app/components/confirm-delete/confirm-delete.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-mechanic-garages',
@@ -16,17 +19,23 @@ import { MatButtonModule } from '@angular/material/button';
 export class MechanicGaragesComponent {
   constructor(private _mechanicDataService:MechanicDataService,
     private _authService:AuthenticationService,
-    public dialog: MatDialog){}
+    public dialog: MatDialog,
+    private snackbar:MatSnackBar){
+      
+    }
   
   displayedColumns = ['#', 'name', 'address', 'timings', 'ratings', 'services', 'status','actions']
   token = "";
   userId = 0;
   data!: GarageTable[];
+  dataSource:any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort: any;
   ratings = [1,2,3,4,5];
   addNewGarage = false;
   activePage = "SHOWGARAGES"
   editData:any;
+  deleteData:any;
   addPhotosdata:any;
 
   ngOnInit(){
@@ -34,11 +43,23 @@ export class MechanicGaragesComponent {
 
     this._authService.token.subscribe((res:any)=>{this.token = res});
     
+    
+    this.updateGarageData();
+  }
+  ngAfterViewInit(){
+    console.log(this.sort)
+    
+  }
+
+  updateGarageData(){
     this._mechanicDataService.getGarageData(this.userId).subscribe(
       (res:any) => {
         this.data = res;
+        this.dataSource = new MatTableDataSource(this.data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       }
-    )
+    );
   }
 
   openServices(Id:any){
@@ -53,6 +74,28 @@ export class MechanicGaragesComponent {
     this.addNewGarage = true;
   }
 
+  confirmDelete(Id:any){
+    this.deleteData = Id;
+    const dialogRef =  this.dialog.open(ConfirmDeleteComponent,{
+      data: "Would you like to delete "+ this.data[this.data.findIndex((obj)=> obj.id == Id)].name + " ?"
+    });
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        console.log("delete");
+        this._mechanicDataService.deleteGarage(Id).subscribe(
+          (res:any) => {
+            this.updateGarageData();
+            this.snackbar.open('Garage Deleted Successfully!!', 'close', {
+              horizontalPosition: "center",
+              verticalPosition: "top",
+              duration: 3000,
+            });
+          },
+          (err:any) => console.log(err)
+        )
+      }
+    });
+  }
   addGaragePhotos(id:any){
     this.activePage = "ADDGARAGEPHOTOS";
     this.addPhotosdata = {
@@ -69,6 +112,13 @@ export class MechanicGaragesComponent {
     this.activePage = "SHOWGARAGES";
     this.addNewGarage = false;
     this.editData = null;
+  }
+  notifyGarageUpdate(){
+    this.snackbar.open('Garage Data Added/Updated !!', 'close', {
+      horizontalPosition: "center",
+      verticalPosition: "top",
+      duration: 3000,
+    });
   }
 }
 

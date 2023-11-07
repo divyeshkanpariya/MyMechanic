@@ -1,0 +1,9 @@
+.garage-image-container{
+    height: 250px;
+    width: auto;;
+    object-fit: cover;
+}
+.garage-image-container img{
+    width: 100%;
+    height: 250px;
+}

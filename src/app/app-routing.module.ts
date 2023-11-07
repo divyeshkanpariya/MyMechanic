@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/login/login.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
@@ -12,6 +12,7 @@ import { ServiceHistoryComponent } from './home/service-history/service-history.
 import { MechanicGaragesComponent } from './home/mechanic-garages/mechanic-garages.component';
 import { MechanicAppointmentsComponent } from './home/mechanic-appointments/mechanic-appointments.component';
 import { MechanicServiceQueueComponent } from './home/mechanic-service-queue/mechanic-service-queue.component';
+import { GarageProfileComponent } from './home/garage-profile/garage-profile.component';
 
 const routes: Routes = [
   {path:'Auth',component:AuthenticationComponent, children:[
@@ -22,14 +23,17 @@ const routes: Routes = [
   {path:'',component:HomeComponent, children:[
     {path:'',component:DashboardComponent},
     {path:'customer/dashboard',component:DashboardComponent},
-    {path:'customer/garages',component:GaragesListForCustomerComponent},
+    {path:'customer/garages', children:[
+      {path:'', component:GaragesListForCustomerComponent},
+      {path:'garage-profile', component:GarageProfileComponent}
+    ]},
     {path:'customer/appointments',component:CustomerAppointmentsComponent},
     {path:'customer/services',component:CustomerServiceComponent},
     {path:'customer/servicehistory',component:ServiceHistoryComponent},
     {path:'mechanic-garages', component:MechanicGaragesComponent},
     {path:'mechanic-appointments', component:MechanicAppointmentsComponent},
     {path:'mechanic-service-queue', component:MechanicServiceQueueComponent},
-
+    
   ]}
 ];
 

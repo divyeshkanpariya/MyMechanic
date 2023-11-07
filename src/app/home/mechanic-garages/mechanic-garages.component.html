@@ -1,4 +1,4 @@
-<div class="m-5">
+<div class="m-sm-5 m-2">
     <div class="d-flex justify-content-between mb-2">
         <h2>My Garages</h2>
         <div *ngIf="activePage == 'ADDGARAGE' || activePage == 'ADDGARAGEPHOTOS';">
@@ -17,7 +17,7 @@
     </div>
     <div class="shadow py-2 px-4 bg-white">
       <div *ngIf="activePage == 'ADDGARAGE';">
-        <app-add-new-garage [data]="editData"></app-add-new-garage>
+        <app-add-new-garage [data]="editData" (backToGarageDetails) = "closeAddNewGarage();notifyGarageUpdate();updateGarageData();"></app-add-new-garage>
       </div>
       <div *ngIf="activePage == 'ADDGARAGEPHOTOS';">
         <app-add-garage-photos [data]="addPhotosdata"></app-add-garage-photos>
@@ -25,15 +25,15 @@
       <div *ngIf="activePage == 'SHOWGARAGES'">
         <h3>All Garages</h3>
         <div class="garages-table-div w-80">
-            <table mat-table [dataSource]="data">
+            <table mat-table [dataSource]="dataSource" matSort>
           
               <ng-container matColumnDef="#">
-                <th mat-header-cell *matHeaderCellDef>No.</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
                 <td mat-cell *matCellDef="let element"> {{element.id}} </td>
               </ng-container>
           
               <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Garage Name</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Garage Name</th>
                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>
               </ng-container>
           
@@ -55,7 +55,7 @@
               </ng-container>
           
               <ng-container matColumnDef="ratings">
-                <th mat-header-cell *matHeaderCellDef>Ratings</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Ratings</th>
                 <td mat-cell *matCellDef="let element">
                   <div *ngIf="element.ratings != 0" class="d-flex justify-content-between">
                     <ng-container *ngFor="let item of ratings;let i=index">
@@ -99,7 +99,7 @@
                     <button mat-icon-button (click)="editGarage(element.id)">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button>
+                    <button mat-icon-button (click)="confirmDelete(element.id)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>

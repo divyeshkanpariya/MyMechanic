@@ -1,1 +1,46 @@
-<p>garages-list-for-customer works!</p>
+<div class="m-sm-4 m-2">
+    <div>
+        <h1>Available Garages</h1>
+    </div>
+    <hr class="my-2">
+    <div class="row">
+        <div class="col-xl-3 col-sm-6 col-md-4 gy-4" *ngFor="let item of garageData">
+            <mat-card class="example-card h-100">
+                <ng-container *ngIf="item.photos.length==0; else displayPhoto">
+                    <div class="garage-image-container">
+                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                    </div>
+                </ng-container>
+                <ng-template #displayPhoto>
+                    <div class="garage-image-container">
+                        <img mat-card-image [src]="'data:image/jpg;base64,'+ item.photos[0].data" [alt]="item.name" class="">
+                        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+                    </div>
+                </ng-template>
+                <div class="d-flex flex-column h-100 justify-content-between my-2">
+                    <mat-card-content>
+                        <h2 class="">{{item.name}}</h2>
+                        <p>
+                            <strong>Address : </strong>
+                            {{item.address}},
+                            {{item.city}} - {{item.postalCode}},
+                            {{item.state}}
+                        </p>
+                        
+                            <strong>Timings : </strong>
+                            <ul>
+                                <li>Opening Time: {{item.startingTime}}</li>
+                                <li>Closing Time: {{item.endingTime}}</li>
+                            </ul>
+                        
+                    </mat-card-content>
+                    <mat-card-actions class="d-flex justify-content-around">
+                        <button mat-raised-button color="warn" (click) = openProfile(item.id)>See Profile</button>
+                        <button mat-raised-button color="primary">Book Appointment</button>
+                    </mat-card-actions>
+                </div>
+              </mat-card>
+        </div>
+        
+    </div>
+</div>

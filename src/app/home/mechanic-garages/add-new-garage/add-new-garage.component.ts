@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MechanicDataService } from 'src/appServices/mechanic-data.service';
 import { map } from 'rxjs/operators'
 import { AuthenticationService } from 'src/appServices/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-new-garage',
@@ -13,7 +14,8 @@ export class AddNewGarageComponent {
 
   constructor(private _mechanicDataService: MechanicDataService,
     private _authService: AuthenticationService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private snackbar:MatSnackBar) { }
 
   addNewGarageForm = new FormGroup({
     id: new FormControl(0),
@@ -36,6 +38,7 @@ export class AddNewGarageComponent {
   })
 
   @Input() data: any;
+  @Output() backToGarageDetails= new EventEmitter<any>();
   states!: any;
   allCities!: any;
   cities!: any;
@@ -102,12 +105,14 @@ export class AddNewGarageComponent {
     console.log(this.addNewGarageForm);
     if(this.addNewGarageForm.controls.startingTime.value?.length == 5)
       this.addNewGarageForm.controls.startingTime.patchValue(this.addNewGarageForm.controls.startingTime.value+':00');
-    if(this.addNewGarageForm.controls.startingTime.value?.length == 5)
+    if(this.addNewGarageForm.controls.endingTime.value?.length == 5)
       this.addNewGarageForm.controls.endingTime.patchValue(this.addNewGarageForm.controls.endingTime.value+':00');
     this.addNewGarageForm.controls.userId.patchValue(this._authService.userId.getValue());  
     
     this._mechanicDataService.addEditGarage(this.addNewGarageForm.value).subscribe(
-        (res:any) => {console.log(res)},
+        (res:any) => {
+          this.backToGarageDetails.emit();
+        },
         (err:any) => console.log("Error : ", err)
     )
 

@@ -1,0 +1,38 @@
+.garage-photo{
+    object-fit:cover;
+    height: 100%;
+    object-fit: cover;
+}
+.garage-photo img{
+    width: 100%;
+}
+.garage-title{
+    font-size:30px;
+    font-weight: 500;
+}
+@media screen and (max-width: 400px) {
+    .garage-photo img{
+        height: 300px;
+    }
+}
+@media screen and (min-width: 400px) {
+    .garage-photo img{
+        height: 350px;
+    }
+}
+@media screen and (min-width: 600px) {
+    .garage-photo img{
+        height: 500px;
+    }
+}
+@media screen and (min-width: 992px) {
+    .garage-photo img{
+        height: 500px;
+    }
+}
+
+@media screen and (min-width: 1480px) {
+    .garage-photo img{
+        height: 600px;
+    }
+}
